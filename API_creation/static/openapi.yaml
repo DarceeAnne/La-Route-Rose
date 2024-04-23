@@ -1,0 +1,573 @@
+openapi: 3.0.3
+
+info:
+  title: La Route Rose API:Paving the Path for Women Cyclists in France
+  description: |-
+    This API exposes a dataset compiled to study the cycling environment for women in France with a special focus on the lenses of representation, safety, and the availability of products adapted to the specific needs of women. It is a mix of three data sources:
+    * The [road traffic bodily injury accidents dataset](https://www.data.gouv.fr/fr/datasets/bases-de-donnees-annuelles-des-accidents-corporels-de-la-circulation-routiere-annees-de-2005-a-2022/#/resources) compiled by the French Government.
+      * Four years' worth of data was extracted (2019-2022). For each year, four tables were extracted - a total of 16 tables. This dataset contains approximately 218,404 accident records in total.
+      * Twenty-seven dimension tables were created manually from the [guide of official labels published by l’autorité de la statistique publique](https://www.data.gouv.fr/fr/datasets/bases-de-donnees-annuelles-des-accidents-corporels-de-la-circulation-routiere-annees-de-2005-a-2022/#/resources/8ef4c2a3-91a0-4d98-ae3a-989bde87b62a).     The dimension tables cover the categorization of sex (male, female), position (road, bike path, side walk, etc.), and route (home to work & vice versa, home to school and vice versa, shopping, etc.). 
+    * Data extracted via webscraping from the top sporting equipment retailer in France which includes two tables (1720 products in total):
+      * All bikes designated as women's bikes: product name, price, and hyperlink to product page.
+      * All bikes designated as men's bikes: product name, price, and hyperlink to product page.
+    * Data extracted from anglophone and francophone online news from mid-March 2024 to mid-April 2024. Keywords were used to extract news articles on the topics of bikes/biking/cycling. There are two tables one for anglophone articles and one for francophone articles. Each table includes: Title, Image URL, Article Description, Article Content (truncated to 200 characters), number of times "female" keywords are mentioned, number of times "male" keywords are mentioned, and "representation" - a simple calculation of whether the article has more male or female mentions or an equally balanced number of mentions (as a proxy for representation).
+    * Contact the developer for API keys.
+
+  contact:
+    email: darceeanne@gmail.com
+  license:
+    name: CC BY-NC 3.0
+    url: https://creativecommons.org/licenses/by-nc/3.0/
+  version: 1.0.0
+  
+paths:
+  /accidents_velo_2019:
+    get:
+      summary: Get a list of bike accidents in 2019
+      description: Retrieve information about recorded bike accidents in 2019.
+      parameters:
+        - name: page
+          in: query
+          description: Page number for pagination (default is 1)
+          schema:
+            type: integer
+            minimum: 1
+        - name: page_size
+          in: query
+          description: Number of accidents per page (default is 100)
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+        - name: departments
+          in: query
+          description: Comma-separated list of department numbers
+          schema:
+            type: string
+        - name: gender
+          in: query
+          description: Gender filter (male or female)
+          schema:
+            type: string
+            enum: [male, female]
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BikeAccident'
+      '401':
+        description: Unauthorized - Please provide valid credentials
+
+  /accidents_velo_2020:
+    get:
+      summary: Get a list of bike accidents in 2020
+      description: Retrieve information about recorded bike accidents in 2020.
+      parameters:
+        - name: page
+          in: query
+          description: Page number for pagination (default is 1)
+          schema:
+            type: integer
+            minimum: 1
+        - name: page_size
+          in: query
+          description: Number of accidents per page (default is 100)
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+        - name: departments
+          in: query
+          description: Comma-separated list of department numbers
+          schema:
+            type: string
+        - name: gender
+          in: query
+          description: Gender filter (male or female)
+          schema:
+            type: string
+            enum: [male, female]
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BikeAccident'
+      '401':
+        description: Unauthorized - Please provide valid credentials
+
+  /accidents_velo_2021:
+    get:
+      summary: Get a list of bike accidents in 2021
+      description: Retrieve information about recorded bike accidents in 2021.
+      parameters:
+        - name: page
+          in: query
+          description: Page number for pagination (default is 1)
+          schema:
+            type: integer
+            minimum: 1
+        - name: page_size
+          in: query
+          description: Number of accidents per page (default is 100)
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+        - name: departments
+          in: query
+          description: Comma-separated list of department numbers
+          schema:
+            type: string
+        - name: gender
+          in: query
+          description: Gender filter (male or female)
+          schema:
+            type: string
+            enum: [male, female]
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BikeAccident'
+      '401':
+        description: Unauthorized - Please provide valid credentials
+
+  /accidents_velo_2022:
+    get:
+      summary: Get a list of bike accidents in 2022
+      description: Retrieve information about recorded bike accidents in 2022.
+      parameters:
+        - name: page
+          in: query
+          description: Page number for pagination (default is 1)
+          schema:
+            type: integer
+            minimum: 1
+        - name: page_size
+          in: query
+          description: Number of accidents per page (default is 100)
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+        - name: departments
+          in: query
+          description: Comma-separated list of department numbers
+          schema:
+            type: string
+        - name: gender
+          in: query
+          description: Gender filter (male or female)
+          schema:
+            type: string
+            enum: [male, female]
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BikeAccident'
+      '401':
+        description: Unauthorized - Please provide valid credentials
+
+  /products/bikes_women:
+    get:
+      summary: Get a list of women's bikes
+      description: Retrieve information about bikes designated as women's bikes.
+      parameters:
+        - name: page
+          in: query
+          description: Page number for pagination (default is 1)
+          schema:
+            type: integer
+            minimum: 1
+        - name: page_size
+          in: query
+          description: Number of bikes per page (default is 100)
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BikesResponse'
+      '401':
+        description: Unauthorized - Please provide valid credentials
+
+  /products/bikes_men:
+    get:
+      summary: Get a list of men's bikes
+      description: Retrieve information about bikes designated as men's bikes.
+      parameters:
+        - name: page
+          in: query
+          description: Page number for pagination (default is 1)
+          schema:
+            type: integer
+            minimum: 1
+        - name: page_size
+          in: query
+          description: Number of bikes per page (default is 100)
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BikesResponse'
+      '401':
+        description: Unauthorized - Please provide valid credentials
+
+  /news_french:
+    get:
+      summary: Get news articles in French
+      description: Retrieve news articles in French with pagination.
+      parameters:
+        - name: page
+          in: query
+          description: Page number for pagination (default is 1)
+          schema:
+            type: integer
+            minimum: 1
+        - name: page_size
+          in: query
+          description: Number of articles per page (default is 100)
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NewsResponse'
+      '401':
+        description: Unauthorized - Please provide valid credentials
+        
+  /news_english:
+    get:
+      summary: Get news articles in English
+      description: Retrieve news articles in English with pagination.
+      parameters:
+        - name: page
+          in: query
+          description: Page number for pagination (default is 1)
+          schema:
+            type: integer
+            minimum: 1
+        - name: page_size
+          in: query
+          description: Number of articles per page (default is 100)
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  news_english:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/NewsResponse'
+                  last_page:
+                    type: string
+                  next_page:
+                    type: string
+        '401':
+          description: Unauthorized - Please provide valid credentials
+
+components:
+  schemas:
+    BikeAccident:
+      type: object
+      properties:
+        NumAcc:
+          type: integer
+          description: Identification number of the accident
+          enum: [201900002371]
+        jour:
+          type: string
+          description: Day of the week
+          enum: [lundi, mardi, mercredi, jeudi, vendredi, samedi, dimanche]
+        an:
+          type: integer
+          description: Year of the accident
+          minimum: 2019
+          maximum: 2022
+        mois:
+          type: string
+          description: Month of the accident
+          enum: [janvier, février, mars, avril, mai, juin, juillet, août, septembre, octobre, novembre, décembre]
+        hrmn:
+          type: integer
+          description: Time of the accident
+          minimum: 000100
+          maximum: 235959
+        lum:
+          type: integer
+          description: Lighting conditions in which the accident occurred
+          minimum: 1
+          maximum: 5
+        department:
+          type: string
+          description: Number of French department (region) of the accident
+          enum: [75, 77, 78, 91, 92, 93, 94, 95]
+        comm:
+          type: string
+          description: Number of Franch commune (city) of the accident
+          enum: [75075, 75101, 95690,95607]
+        agg:
+          type: integer
+          description: Location
+          enum: [1,2]
+        int:
+          type: integer
+          description: Intersection
+          enum: [1,2,3,4,5,6,7,8,9]
+        atm:
+          type: integer
+          description: Atmospheric conditions
+          enum: [1,2,3,4,5,6,7,8]
+        col:
+          type: integer
+          description: Type of collision
+          enum: [1,2,3,4,5,6,7]
+        adr:
+          type: string
+          description: Street or street address of the accident
+          enum: [WINSTON CHURCHILL (QU),WALLACE (BD RICHARD) DU 17 AU 91 ET DU 3]
+        lat:
+          type: float
+          description: Latitude of the accident
+          enum: [48.8009500]
+        long:
+          type: float
+          description: Longitude of the accident
+          enum: [2.5220900]
+        id_vehicule:
+          type: string
+          description: Unique identifier of the vehicle taken for each of the occupants using this vehicle
+          enum: [138 291 301]
+        senc:
+          type: integer
+          description: Direction of travel
+          enum: [-1,0,1,2,3]
+        catv:
+          type: string
+          description: Vehicle category
+          enum: [1]
+        obs:
+          type: integer
+          description: Fixed obstacle struck
+          enum: [-1,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]
+        obsm:
+          type: integer
+          description: Mobile obstacle struck
+          enum: [2,3,4,5,6,7,8,9]
+        choc:
+          type: integer
+          description: Initial point of impact
+          enum: [3,4,5,6,7,8,9]
+        manv:
+          type: integer
+          description: Main maneuver before the accident
+          enum: [25]
+        motor:
+          type: integer
+          description: Type of vehicle propulsion
+          enum: [4]
+        num_veh:
+          type: string
+          description: Identifier of the vehicle involved for each occupant of the vehicle (including pedestrians who are linked to the vehicles that hit them) - Alphanumeric code.
+          enum: [A01]
+        place:
+          type: integer
+          description: This allows locating the seat occupied by the occupant in the vehicle at the time of the accident.
+          enum: [3]
+        catu:
+          type: integer
+          description: User category
+          enum: [3]
+        grave:
+          type: integer
+          description: Injury severity of the user, injured users are classified into three categories of victims plus those uninjured.
+          enum: [2]
+        sexe:
+          type: integer
+          description: Gender of the person involved
+          enum: [1,2]
+        an_nais:
+          type: integer
+          description: Year of birth of the person
+          enum: [1987]
+        trajet:
+          type: string
+          description: Purpose of the trip
+          enum: [Domicile – travail, Domicile – école, Courses – achats, Utilisation professionnelle, Promenade – loisirs, Autre, Non renseigné]
+        secu1:
+          type: integer
+          description: The indication of the character specifies the presence and use of safety equipment
+          enum: [8]
+        secu2:
+          type: integer
+          description: The indication of the character specifies the presence and use of safety equipment
+          enum: [6]
+        secu3:
+          type: integer
+          description: The indication of the character specifies the presence and use of safety equipment
+          enum: [5]
+        locp:
+          type: integer
+          description: Location of pedestrian
+          enum: [-1]
+        actp:
+          type: integer
+          description: Action of pedestrian
+          enum: [-1]
+        etatp:
+          type: integer
+          description: This variable specifies whether the pedestrian involved in the accident was alone or not.
+          enum: [-1]
+        catr:
+          type: integer
+          description: Category of the street
+          enum: [4]
+        voie:
+          type: string
+          description: Street name or number where the accident occured
+          enum: [RUE VITRUVE]
+        v1:
+          type: integer
+          description: Numeric index of the road number (e.g., 2 bis, 3 ter, etc.).
+          enum: [0]
+        v2:
+          type: string
+          description: Alphanumeric index letter of the road.
+          enum: [D]
+        circ:
+          type: integer
+          description: Traffic regime
+          enum: [2]
+        nbv:
+          type: integer
+          description: Total number of traffic lanes.
+          enum: [7]
+        vosp:
+          type: integer
+          description: Indicates the existence of a reserved lane, regardless of whether the accident occurs on that lane or not.
+          enum: [3]
+        prof: 
+          type: integer
+          description: Longitudinal profile describes the slope of the road at the location of the accident.
+          enum: [2]
+        pr:
+          type: string
+          description: Reference point number (PR number) of attachment (number of the upstream marker). The value -1 indicates that the PR is not specified.
+          enum: [83]
+        pr1:
+          type: string
+          description: Distance en mètres au PR (par rapport à la borne amont). La valeur -1 signifie que le PR n’est pas renseigné.
+          enum: [866]
+        plan:
+          type: integer
+          description: Plan layout.
+          enum: [4]
+        surf:
+          type: integer
+          description: Surface condition.
+          enum: [2]
+        infra:
+          type: integer
+          description: Infrastucture
+          enum: [6]
+        situ:
+          type: integer
+          description: Accident location.
+          enum: [7]
+        vma:
+          type: integer
+          description: Maximum authorized speed at the location and at the time of the accident.
+          enum: [50]
+    BikesResponse:
+      type: object
+      properties:
+        bikes:
+          type: array
+          items:
+            $ref: '#/components/schemas/BikeItem'
+        last_page:
+          type: string
+        next_page:
+          type: string
+    BikeItem:
+      type: object
+      properties:
+        Name:
+          type: string
+        Price:
+          type: number
+          format: float
+        URL:
+          type: string
+          format: uri
+      example:
+        Name: "Giant Liv Thrive 1 Disc 2022 Women's Road Bike"
+        Price: 1599.99
+        URL: "https://www.example.com/bikes/liv-thrive-1-disc-2022-womens-road-bike"
+    NewsResponse:
+      type: object
+      properties:
+        news_french:
+          type: array
+          items:
+            $ref: '#/components/schemas/NewsItem'
+        last_page:
+          type: string
+        next_page:
+          type: string
+    NewsItem:
+      type: object
+      properties:
+        Title:
+          type: string
+          description: Title of the article
+        Publication Year:
+          type: integer
+          description: Publication year of the article
+        Image URL:
+          type: string
+          description: Link to the primary image associated to the article.
+        Article Content:
+          type: string
+          description: Article content trunkated to 200 characters.
+        Article Description: 
+          type: string
+          description: Short description of the article.
+      example:
+        Title: "Un moteur de drone anime les vélos électriques"
+        Publication Year: 2024
+        Image URL: "https://img-cdn.tnwcdn.com/image/thenextweb/20240410114126-GettyImages-674535274.width-1200.jpg"
+        Article Content: "La startup de moteurs de drone Skydio lance une entreprise de vélos électriques appelée Helios."
+        Article Description: "La nouvelle marque de vélos électriques de Skydio, Helios, sera alimentée par la technologie des drones."
