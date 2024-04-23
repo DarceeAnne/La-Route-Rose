@@ -16,21 +16,5 @@ Gender Representation: Media coverage tends to favor male cyclists, perpetuating
 Product Availability: Initial analysis suggests equal representation of cycling products for men and women, but further exploration is warranted to identify potential gaps or areas for improvement.
 Predictive Modeling: Machine learning algorithms offer valuable insights into temporal trends and spatial dynamics of bike accidents, enabling proactive safety measures and infrastructure improvements.
 
-## How to Use
-Clone the repository to your local machine.
-Navigate to the desired directory.
-Run git clone https://github.com/your_username/La-Route-Rose.git.
-Install the required dependencies by running pip install -r requirements.txt.
-Explore the Jupyter notebooks in the notebooks directory for detailed analysis and insights.
-
-
-## Contribution Guidelines
-We welcome contributions from the community to enhance the project's impact and reach. Please follow these guidelines:
-Fork the repository.
-Create a new branch (git checkout -b feature_branch).
-Make your changes and commit them (git commit -m 'Add new feature').
-Push to the branch (git push origin feature_branch).
-Create a new Pull Request.
-
 ## Credits
 This project was developed by Darcee Caron as part of Ironhack Paris' Data Analytics & Artificial Intelligence program.
